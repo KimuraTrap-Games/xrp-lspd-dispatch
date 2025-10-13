@@ -8,8 +8,10 @@
 </head>
 <body>
   <header>
-    <h1>LSPD Dispatch</h1>
+    <h1>Los Santos Police Department</h1>
+    <h2>Dispatch Center</h2>
     <h3>Obey and Survive</h3>
+    <button id="toggle-lights">Activate Lights</button>
   </header>
 
   <main>
@@ -30,17 +32,22 @@
                 <option value="Suspicious Activity">Suspicious Activity</option>
                 <option value="Medical Emergency">Medical Emergency</option>
                 <option value="Unavailable">Unavailable</option>
+                <option value="Panic">Panic</option>
             </select>
 
             <input type="text" id="call-location" placeholder="Enter Location" required>
             <button type="submit">Add Call</button>
         </form>
 
+        
+
 
       <ul id="call-list">
         <!-- Call logs appear here -->
       </ul>
     </section>
+
+    
 
     <section id="units">
       <h2>Active Units</h2>
@@ -55,6 +62,11 @@
       <button id="panic-btn">Trigger Panic</button>
     </section>
   </main>
+  
+    <footer>
+        <p>Designed and Developed by KimuraTrap Studios</p>
+        <p>&copy; 2025 KimuraTrap Studios</p>
+    </footer>
 
   <script src="script.js"></script>
   <!-- <script src="server.js"></script> -->

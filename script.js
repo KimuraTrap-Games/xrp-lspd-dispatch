@@ -205,3 +205,14 @@ function updateCallUnitDropdowns() {
 panicBtn.addEventListener('click', () => {
   alert('🚨 Panic triggered!');
 });
+
+document.getElementById("toggle-lights").addEventListener("click", function() {
+  const header = document.querySelector("header");
+  header.classList.toggle("flashing");
+
+  if (header.classList.contains("flashing")) {
+    this.textContent = "Deactivate Lights";
+  } else {
+    this.textContent = "Activate Lights";
+  }
+});

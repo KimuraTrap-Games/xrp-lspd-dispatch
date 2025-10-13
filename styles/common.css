@@ -12,8 +12,51 @@ header {
   padding: 1rem;
   text-align: center;
   border: 2px solid blue;
-  text-shadow: 2px 2px blue;
+  text-shadow: 2px 2px 5px rgba(0,0,255,0.6);
+  transition: all 0.5s ease;
 }
+
+.disclaimer {
+    font-size: 12px;
+}
+
+/* Only animate when 'flashing' class is active */
+header.flashing {
+  animation: policeLights 1.5s infinite alternate;
+}
+
+@keyframes policeLights {
+  0% {
+    background: linear-gradient(to right, blue, red);
+    box-shadow: 0 0 20px blue;
+  }
+  50% {
+    background: linear-gradient(to right, red, blue);
+    box-shadow: 0 0 20px red;
+  }
+  100% {
+    background: linear-gradient(to right, blue, red);
+    box-shadow: 0 0 25px blue;
+  }
+}
+
+/* Style the toggle button */
+#toggle-lights {
+  background: #1c1c1c;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#toggle-lights:hover {
+  background: #333;
+}
+
+
 
 h1 {
   color: white;
@@ -100,4 +143,26 @@ button:hover {
 /* Panic section styling */
 #panic {
   text-align: center;
+}
+
+#panic button {
+  background: red;
+  color: white;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: 2px solid white;
+}
+
+footer {
+  background: black;
+  color: red;
+  padding: 1rem;
+  text-align: center;
+  border: 2px solid blue;
+  text-shadow: 2px 2px 5px rgba(0,0,255,0.6);
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
 }
