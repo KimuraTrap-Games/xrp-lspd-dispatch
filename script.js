@@ -5,6 +5,29 @@ const panicBtn = document.getElementById('panic-btn');
 const addCallForm = document.getElementById('add-call-form');
 const callTypeSelect = document.getElementById('call-type');
 
+// Predefined call types
+const callTypes = [
+  "Shots Fired",
+  "Drug Sales",
+  "Store Robbery",
+  "House Robbery",
+  "Bank Robbery",
+  "Armored Truck Robbery",
+  "Traffic Stop",
+  "Pursuit",
+  "Disturbance",
+  "Suspicious Activity",
+  "Medical Emergency",
+  "Assault",
+  "Domestic Dispute",
+  "Fire",
+  "Vandalism",
+  "Theft",
+  "Public Intoxication",
+  "Gang Activity",
+  "Missing Person"
+];
+
 // Add unit manually
 addUnitBtn.addEventListener('click', () => {
   const callsign = prompt("Enter unit's callsign:");
@@ -27,7 +50,6 @@ addUnitBtn.addEventListener('click', () => {
   li.appendChild(removeBtn);
   unitList.appendChild(li);
 
-  // Update all call unit dropdowns
   updateCallUnitDropdowns();
 });
 
@@ -39,22 +61,39 @@ addCallForm.addEventListener('submit', (e) => {
   if (!callType) return;
 
   const li = document.createElement('li');
-  li.innerHTML = `<strong>${callType}</strong> <br>Assigned Units: <span class="assigned-units">None</span> `;
 
-  // Create unit dropdown
+  // Create call type dropdown for this call
+  const callTypeDropdown = document.createElement('select');
+  callTypes.forEach(type => {
+    const option = document.createElement('option');
+    option.value = type;
+    option.text = type;
+    if (type === callType) option.selected = true;
+    callTypeDropdown.add(option);
+  });
+
+  li.appendChild(callTypeDropdown);
+
+  // Assigned units span
+  const assignedSpan = document.createElement('span');
+  assignedSpan.className = "assigned-units";
+  assignedSpan.textContent = "None";
+  li.appendChild(document.createElement('br'));
+  li.appendChild(document.createTextNode("Assigned Units: "));
+  li.appendChild(assignedSpan);
+
+  // Unit dropdown
   const assignSelect = document.createElement('select');
   const defaultOption = document.createElement('option');
   defaultOption.text = "Assign Unit";
   defaultOption.disabled = true;
   defaultOption.selected = true;
   assignSelect.add(defaultOption);
-
   li.appendChild(assignSelect);
 
   // When a unit is selected
   assignSelect.addEventListener('change', () => {
     const selectedUnit = assignSelect.value;
-    const assignedSpan = li.querySelector(".assigned-units");
     if (assignedSpan.textContent === "None") {
       assignedSpan.textContent = selectedUnit;
     } else {
@@ -73,6 +112,10 @@ function updateCallUnitDropdowns() {
   const allDropdowns = callList.querySelectorAll("select");
 
   allDropdowns.forEach(dropdown => {
+    // Only update unit dropdowns (skip call type dropdowns)
+    if (dropdown === callTypeSelect) return; // skip form dropdown
+    if (Array.from(dropdown.options).some(o => callTypes.includes(o.value))) return; // skip call type dropdowns
+
     // Clear existing options except first
     while (dropdown.options.length > 1) {
       dropdown.remove(1);
