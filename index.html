@@ -15,9 +15,9 @@
   <main>
     <section id="calls">
       <h2>Call Logs</h2>
-      <form id="add-call-form">
-        <label for="call-type">Call Type:</label>
+        <form id="add-call-form">
             <select id="call-type">
+                <option value="" disabled selected>Select Call Type</option>
                 <option value="Shots Fired">Shots Fired</option>
                 <option value="Drug Sales">Drug Sales</option>
                 <option value="Store Robbery">Store Robbery</option>
@@ -29,17 +29,13 @@
                 <option value="Disturbance">Disturbance</option>
                 <option value="Suspicious Activity">Suspicious Activity</option>
                 <option value="Medical Emergency">Medical Emergency</option>
-                <option value="Assault">Assault</option>
-                <option value="Domestic Dispute">Domestic Dispute</option>
-                <option value="Fire">Fire</option>
-                <option value="Vandalism">Vandalism</option>
-                <option value="Theft">Theft</option>
-                <option value="Public Intoxication">Public Intoxication</option>
-                <option value="Gang Activity">Gang Activity</option>
-                <option value="Missing Person">Missing Person</option>
             </select>
-        <button type="submit">Add Call</button>
-      </form>
+
+            <input type="text" id="call-location" placeholder="Enter Location" required>
+            <button type="submit">Add Call</button>
+        </form>
+
+
       <ul id="call-list">
         <!-- Call logs appear here -->
       </ul>

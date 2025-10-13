@@ -3,10 +3,11 @@ body {
   margin: 0;
   padding: 0;
   background: #1a1a1a;
+  color: #fff;
 }
 
 header {
-  background: #1c1c1c;
+  background: linear-gradient(to right, blue, red);
   color: #fff;
   padding: 1rem;
   text-align: center;
@@ -15,11 +16,12 @@ header {
 }
 
 h1 {
-    color: black;
+  color: white;
+  margin: 0;
 }
 
 h3 {
-    color: gold;
+  color: gold;
 }
 
 main {
@@ -31,11 +33,12 @@ main {
 }
 
 section {
-  background: #fff;
+  background: #2a2a2a;
   padding: 1rem;
   border-radius: 6px;
-  width: 300px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 320px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  border: 2px solid blue;
 }
 
 button {
@@ -46,8 +49,55 @@ button {
   color: #fff;
   cursor: pointer;
   border-radius: 4px;
+  transition: background 0.2s;
 }
 
 button:hover {
   background: #333;
+}
+
+/* Call log items as cards */
+#call-list li {
+  border: 2px solid #555;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 12px;
+  background-color: #3a3a3a;
+  list-style: none;
+}
+
+/* Assigned units styling */
+#call-list li .assigned-units {
+  font-weight: bold;
+  color: #00ccff;
+}
+
+/* Remove/Assign buttons spacing */
+#call-list li button {
+  margin-top: 5px;
+}
+
+/* Call type dropdown styling */
+#call-list li select {
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+/* Unavailable units dimmed in the unit list */
+#unit-list li[data-available="false"] {
+  opacity: 0.5;
+}
+
+/* Active unit list styling */
+#unit-list li {
+  margin-bottom: 6px;
+  background: #444;
+  padding: 5px;
+  border-radius: 4px;
+  list-style: none;
+}
+
+/* Panic section styling */
+#panic {
+  text-align: center;
 }

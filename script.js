@@ -4,8 +4,8 @@ const addUnitBtn = document.getElementById('add-unit-btn');
 const panicBtn = document.getElementById('panic-btn');
 const addCallForm = document.getElementById('add-call-form');
 const callTypeSelect = document.getElementById('call-type');
+const callLocationInput = document.getElementById('call-location');
 
-// Predefined call types
 const callTypes = [
   "Shots Fired",
   "Drug Sales",
@@ -38,6 +38,7 @@ addUnitBtn.addEventListener('click', () => {
 
   const li = document.createElement('li');
   li.textContent = `${callsign} - ${name} `;
+  li.dataset.available = "true";
 
   const removeBtn = document.createElement('button');
   removeBtn.textContent = "Remove";
@@ -58,11 +59,14 @@ addCallForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const callType = callTypeSelect.value;
-  if (!callType) return;
+  const location = callLocationInput.value.trim();
+  if (!callType || !location) {
+    return alert("Please enter both a call type and a location.");
+  }
 
   const li = document.createElement('li');
 
-  // Create call type dropdown for this call
+  // Call type dropdown
   const callTypeDropdown = document.createElement('select');
   callTypes.forEach(type => {
     const option = document.createElement('option');
@@ -71,8 +75,15 @@ addCallForm.addEventListener('submit', (e) => {
     if (type === callType) option.selected = true;
     callTypeDropdown.add(option);
   });
-
   li.appendChild(callTypeDropdown);
+
+  // Location display
+  const locationSpan = document.createElement('span');
+  locationSpan.textContent = `Location: ${location}`;
+  locationSpan.style.display = "block";
+  locationSpan.style.fontStyle = "italic";
+  locationSpan.style.marginTop = "5px";
+  li.appendChild(locationSpan);
 
   // Assigned units span
   const assignedSpan = document.createElement('span');
@@ -91,35 +102,83 @@ addCallForm.addEventListener('submit', (e) => {
   assignSelect.add(defaultOption);
   li.appendChild(assignSelect);
 
-  // When a unit is selected
+  // Remove unit buttons container
+  const removeUnitBtns = document.createElement('div');
+  li.appendChild(removeUnitBtns);
+
+  // Assign unit event
   assignSelect.addEventListener('change', () => {
-    const selectedUnit = assignSelect.value;
-    if (assignedSpan.textContent === "None") {
-      assignedSpan.textContent = selectedUnit;
-    } else {
-      assignedSpan.textContent += `, ${selectedUnit}`;
+    const selectedUnitText = assignSelect.value;
+    const unitLi = Array.from(unitList.children).find(u => u.textContent.replace("Remove", "").trim() === selectedUnitText);
+    if (!unitLi || unitLi.dataset.available === "false") {
+      alert("Unit unavailable.");
+      assignSelect.value = "";
+      return;
     }
-    assignSelect.value = ""; // Reset dropdown
+
+    unitLi.dataset.available = "false";
+    unitLi.style.opacity = "0.5";
+
+    if (assignedSpan.textContent === "None") {
+      assignedSpan.textContent = selectedUnitText;
+    } else {
+      assignedSpan.textContent += `, ${selectedUnitText}`;
+    }
+
+    const removeBtn = document.createElement('button');
+    removeBtn.textContent = `Remove ${selectedUnitText}`;
+    removeBtn.style.marginLeft = "5px";
+    removeBtn.addEventListener('click', () => {
+      const currentUnits = assignedSpan.textContent.split(", ").filter(u => u !== selectedUnitText);
+      assignedSpan.textContent = currentUnits.length ? currentUnits.join(", ") : "None";
+
+      unitLi.dataset.available = "true";
+      unitLi.style.opacity = "1";
+      removeUnitBtns.removeChild(removeBtn);
+    });
+
+    removeUnitBtns.appendChild(removeBtn);
+    assignSelect.value = "";
   });
+
+  // Delete call button
+  const deleteCallBtn = document.createElement('button');
+  deleteCallBtn.textContent = "Delete Call";
+  deleteCallBtn.style.marginLeft = "10px";
+  deleteCallBtn.addEventListener('click', () => {
+    if (assignedSpan.textContent !== "None") {
+      const units = assignedSpan.textContent.split(", ");
+      units.forEach(uText => {
+        const unitLi = Array.from(unitList.children).find(li => li.textContent.replace("Remove", "").trim() === uText);
+        if (unitLi) {
+          unitLi.dataset.available = "true";
+          unitLi.style.opacity = "1";
+        }
+      });
+    }
+    callList.removeChild(li);
+    updateCallUnitDropdowns();
+  });
+
+  li.appendChild(deleteCallBtn);
 
   callList.appendChild(li);
   updateCallUnitDropdowns();
+
+  addCallForm.reset(); // reset form after adding
 });
 
-// Update all call dropdowns with current active units
+// Update dropdowns
 function updateCallUnitDropdowns() {
-  const activeUnits = Array.from(unitList.children).map(li => li.textContent.replace("Remove", "").trim());
+  const activeUnits = Array.from(unitList.children)
+    .filter(li => li.dataset.available === "true")
+    .map(li => li.textContent.replace("Remove", "").trim());
+
   const allDropdowns = callList.querySelectorAll("select");
 
   allDropdowns.forEach(dropdown => {
-    // Only update unit dropdowns (skip call type dropdowns)
-    if (dropdown === callTypeSelect) return; // skip form dropdown
-    if (Array.from(dropdown.options).some(o => callTypes.includes(o.value))) return; // skip call type dropdowns
-
-    // Clear existing options except first
-    while (dropdown.options.length > 1) {
-      dropdown.remove(1);
-    }
+    if (Array.from(dropdown.options).some(o => callTypes.includes(o.value))) return;
+    while (dropdown.options.length > 1) dropdown.remove(1);
 
     activeUnits.forEach(unit => {
       const option = document.createElement('option');
