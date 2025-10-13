@@ -25,7 +25,8 @@ const callTypes = [
   "Theft",
   "Public Intoxication",
   "Gang Activity",
-  "Missing Person"
+  "Missing Person",
+  "Unavailable"
 ];
 
 // Add unit manually
@@ -39,6 +40,7 @@ addUnitBtn.addEventListener('click', () => {
   const li = document.createElement('li');
   li.textContent = `${callsign} - ${name} `;
   li.dataset.available = "true";
+  li.style.color = "green"; // available by default
 
   const removeBtn = document.createElement('button');
   removeBtn.textContent = "Remove";
@@ -77,15 +79,21 @@ addCallForm.addEventListener('submit', (e) => {
   });
   li.appendChild(callTypeDropdown);
 
-  // Location display
-  const locationSpan = document.createElement('span');
-  locationSpan.textContent = `Location: ${location}`;
-  locationSpan.style.display = "block";
-  locationSpan.style.fontStyle = "italic";
-  locationSpan.style.marginTop = "5px";
-  li.appendChild(locationSpan);
+  // Editable location input
+  const locationInputField = document.createElement('input');
+  locationInputField.type = "text";
+  locationInputField.value = location;
+  locationInputField.style.display = "block";
+  locationInputField.style.fontStyle = "italic";
+  locationInputField.style.marginTop = "5px";
+  li.appendChild(locationInputField);
 
-  // Assigned units span
+  locationInputField.addEventListener('change', () => {
+    const newLocation = locationInputField.value.trim();
+    if (!newLocation) alert("Location cleared. You can type a new location.");
+  });
+
+  // Assigned units
   const assignedSpan = document.createElement('span');
   assignedSpan.className = "assigned-units";
   assignedSpan.textContent = "None";
@@ -93,7 +101,7 @@ addCallForm.addEventListener('submit', (e) => {
   li.appendChild(document.createTextNode("Assigned Units: "));
   li.appendChild(assignedSpan);
 
-  // Unit dropdown
+  // Unit assignment dropdown
   const assignSelect = document.createElement('select');
   const defaultOption = document.createElement('option');
   defaultOption.text = "Assign Unit";
@@ -102,11 +110,10 @@ addCallForm.addEventListener('submit', (e) => {
   assignSelect.add(defaultOption);
   li.appendChild(assignSelect);
 
-  // Remove unit buttons container
   const removeUnitBtns = document.createElement('div');
   li.appendChild(removeUnitBtns);
 
-  // Assign unit event
+  // Assign unit
   assignSelect.addEventListener('change', () => {
     const selectedUnitText = assignSelect.value;
     const unitLi = Array.from(unitList.children).find(u => u.textContent.replace("Remove", "").trim() === selectedUnitText);
@@ -118,6 +125,7 @@ addCallForm.addEventListener('submit', (e) => {
 
     unitLi.dataset.available = "false";
     unitLi.style.opacity = "0.5";
+    unitLi.style.color = "red"; // mark as on call
 
     if (assignedSpan.textContent === "None") {
       assignedSpan.textContent = selectedUnitText;
@@ -134,14 +142,17 @@ addCallForm.addEventListener('submit', (e) => {
 
       unitLi.dataset.available = "true";
       unitLi.style.opacity = "1";
+      unitLi.style.color = "green"; // mark as available
       removeUnitBtns.removeChild(removeBtn);
+      updateCallUnitDropdowns();
     });
 
     removeUnitBtns.appendChild(removeBtn);
     assignSelect.value = "";
+    updateCallUnitDropdowns();
   });
 
-  // Delete call button
+  // Delete call
   const deleteCallBtn = document.createElement('button');
   deleteCallBtn.textContent = "Delete Call";
   deleteCallBtn.style.marginLeft = "10px";
@@ -153,6 +164,7 @@ addCallForm.addEventListener('submit', (e) => {
         if (unitLi) {
           unitLi.dataset.available = "true";
           unitLi.style.opacity = "1";
+          unitLi.style.color = "green";
         }
       });
     }
@@ -165,7 +177,7 @@ addCallForm.addEventListener('submit', (e) => {
   callList.appendChild(li);
   updateCallUnitDropdowns();
 
-  addCallForm.reset(); // reset form after adding
+  addCallForm.reset();
 });
 
 // Update dropdowns
