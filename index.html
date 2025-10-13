@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LSPD Dispatch</title>
+  <link rel="stylesheet" href="styles/common.css">
+</head>
+<body>
+  <header>
+    <h1>LSPD Dispatch</h1>
+    <h3>Obey and Survive</h3>
+  </header>
+
+  <main>
+    <section id="calls">
+      <h2>Call Logs</h2>
+      <form id="add-call-form">
+        <label for="call-type">Call Type:</label>
+        <select id="call-type">
+          <option value="Shots Fired">Shots Fired</option>
+          <option value="Drug Sales">Drug Sales</option>
+          <option value="Robbery">Robbery</option>
+          <option value="Traffic Stop">Traffic Stop</option>
+          <option value="Disturbance">Disturbance</option>
+        </select>
+        <button type="submit">Add Call</button>
+      </form>
+      <ul id="call-list">
+        <!-- Call logs appear here -->
+      </ul>
+    </section>
+
+    <section id="units">
+      <h2>Active Units</h2>
+      <ul id="unit-list">
+        <!-- Active units appear here -->
+      </ul>
+      <button id="add-unit-btn">Add Unit</button>
+    </section>
+
+    <section id="panic">
+      <h2>Panic Buttons</h2>
+      <button id="panic-btn">Trigger Panic</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #1a1a1a;
+}
+
+header {
+  background: #1c1c1c;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  border: 2px solid blue;
+  text-shadow: 2px 2px blue;
+}
+
+h1 {
+    color: black;
+}
+
+h3 {
+    color: gold;
+}
+
+main {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+section {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 6px;
+  width: 300px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #1c1c1c;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background: #333;
+}
