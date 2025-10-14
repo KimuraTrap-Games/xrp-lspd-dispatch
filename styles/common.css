@@ -2,6 +2,8 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  padding-bottom: 70px;
+  box-sizing: border-box;
   background: #1a1a1a;
   color: #fff;
 }
@@ -16,29 +18,60 @@ header {
   transition: all 0.5s ease;
 }
 
-.disclaimer {
-    font-size: 12px;
-}
 
 /* Only animate when 'flashing' class is active */
 header.flashing {
-  animation: policeLights 1.5s infinite alternate;
+  animation: policeLights 1s infinite linear;
 }
 
+/* Twin-pod LAPD strobe pattern */
 @keyframes policeLights {
-  0% {
-    background: linear-gradient(to right, blue, red);
-    box-shadow: 0 0 20px blue;
+  0%, 10% {
+    background: linear-gradient(to right, blue 50%, black 50%);
+    box-shadow: 0 0 30px blue, 0 0 0px red;
   }
-  50% {
-    background: linear-gradient(to right, red, blue);
-    box-shadow: 0 0 20px red;
+  11%, 20% {
+    background: linear-gradient(to right, black 50%, red 50%);
+    box-shadow: 0 0 0px blue, 0 0 30px red;
   }
-  100% {
-    background: linear-gradient(to right, blue, red);
-    box-shadow: 0 0 25px blue;
+  21%, 30% {
+    background: linear-gradient(to right, blue 50%, black 50%);
+    box-shadow: 0 0 40px blue, 0 0 0px red;
+  }
+  31%, 40% {
+    background: linear-gradient(to right, black 50%, red 50%);
+    box-shadow: 0 0 0px blue, 0 0 40px red;
+  }
+  41%, 50% {
+    background: linear-gradient(to right, blue 50%, black 50%);
+    box-shadow: 0 0 50px blue, 0 0 0px red;
+  }
+  51%, 60% {
+    background: linear-gradient(to right, black 50%, red 50%);
+    box-shadow: 0 0 0px blue, 0 0 50px red;
+  }
+  61%, 70% {
+    background: linear-gradient(to right, blue 50%, black 50%);
+    box-shadow: 0 0 60px blue, 0 0 0px red;
+  }
+  71%, 80% {
+    background: linear-gradient(to right, black 50%, red 50%);
+    box-shadow: 0 0 0px blue, 0 0 60px red;
+  }
+  81%, 90% {
+    background: linear-gradient(to right, blue 50%, red 50%);
+    box-shadow: 0 0 70px blue, 0 0 70px red;
+  }
+  91%, 100% {
+    background: linear-gradient(to right, red 50%, blue 50%);
+    box-shadow: 0 0 70px red, 0 0 70px blue;
   }
 }
+
+
+
+
+
 
 /* Style the toggle button */
 #toggle-lights {
@@ -143,16 +176,17 @@ button:hover {
 /* Panic section styling */
 #panic {
   text-align: center;
+  padding-bottom: 2rem;
 }
 
-#panic button {
+#panic-btn {
   background: red;
   color: white;
   font-weight: bold;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  border-radius: 8px;
-  border: 2px solid white;
+  padding: 1rem;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid white;
 }
 
 footer {
@@ -160,9 +194,11 @@ footer {
   color: red;
   padding: 1rem;
   text-align: center;
-  border: 2px solid blue;
   text-shadow: 2px 2px 5px rgba(0,0,255,0.6);
-  width: 100vw;
-  position: absolute;
+  width: 100%;
+  position: fixed;
   bottom: 0;
+  left: 0;
+  font-size: 12px;
+  z-index: 1000; /* keeps it above other content */
 }
