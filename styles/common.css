@@ -21,7 +21,7 @@ header {
 
 /* Only animate when 'flashing' class is active */
 header.flashing {
-  animation: policeLights 1s infinite linear;
+  animation: policeLights 2s infinite linear;
 }
 
 /* Twin-pod LAPD strobe pattern */
@@ -67,10 +67,6 @@ header.flashing {
     box-shadow: 0 0 70px red, 0 0 70px blue;
   }
 }
-
-
-
-
 
 
 /* Style the toggle button */
