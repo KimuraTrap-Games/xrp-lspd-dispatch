@@ -214,7 +214,7 @@ panicBtn.addEventListener('click', () => {
   panicCall.appendChild(callTypeDropdown);
 
   const locationInputField = document.createElement('input');
-  locationInputField.type = "text";
+  locationInputField.type = "text"; 
   locationInputField.value = "Unknown Location";
   locationInputField.style.display = "block";
   locationInputField.style.fontStyle = "italic";
